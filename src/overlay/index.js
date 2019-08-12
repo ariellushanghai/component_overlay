@@ -1,4 +1,3 @@
-// @flow
 import styles from './index.styl';
 
 const DEFAULT_OPTIONS = {
@@ -52,14 +51,19 @@ class Overlay {
         // 模态窗的标题
         const $title = document.createElement('div');
         $title.setAttribute('class', `${styles.title}`);
-        $title.innerText = String(this._options.title);
+        $title.textContent = String(this._options.title);
         // 模态窗的内容
         const $content = document.createElement('div');
         $content.setAttribute('class', `${styles.content}`);
         if (this._options.flag_html_as_content) {
-            $content.innerHTML = String(this._options.content)
+            try {
+                $content.innerHTML = String(this._options.content)
+            } catch (e) {
+                console.error('Error: _options.content is NOT valid HTML string');
+                $content.textContent = String(this._options.content)
+            }
         } else {
-            $content.innerText = String(this._options.content)
+            $content.textContent = String(this._options.content)
         }
         // 模态窗的按钮组
         const html_str = `<button class="btn cancel">${this._options.text_cancel}</button>
@@ -69,21 +73,17 @@ class Overlay {
         $buttons.setAttribute('class', `${styles.buttonContainer}`);
         $buttons.innerHTML = html_str;
         // 生成子树
-        $modal.appendChild($title);
-        $modal.appendChild($content);
-        $modal.appendChild($buttons);
-        $cover.appendChild($modal);
+        $modal.append($title, $content, $buttons);
+        $cover.append($modal);
         //
-        fragment.appendChild($cover);
+        fragment.append($cover);
         return fragment
     }
 
     // mount an <overlay/> instance to body
     mount(fragment) {
         if (!this._isMounted) {
-            // const fragment = document.createDocumentFragment();
-            // fragment.appendChild(_);
-            document.body.appendChild(fragment);
+            document.body.append(fragment);
             this._isMounted = true;
             this._mountNode = document.querySelector(`#overlay_instance_${this._id}`)
         }
@@ -107,6 +107,19 @@ class Overlay {
     open() {
         console.log('open');
         if (this._isMounted) {
+            // overrides siblings' z-index
+            const siblings = [...this._mountNode.parentNode.childNodes];
+            console.log(`siblings: `, siblings);
+            let record = 0;
+            siblings.forEach(s => {
+                // console.log(window.getComputedStyle(s).getPropertyValue('z-index'))
+                const v = Number(window.getComputedStyle(s).getPropertyValue('z-index'));
+                if (v > record) {
+                    record = v
+                }
+            });
+            console.log(record + 1);
+            this._mountNode.style.zIndex = `${record + 1}`;
             this._mountNode.classList.remove(`${styles.closed}`);
             if (this._options.flag_lock_page_scroll) {
                 // lock body scrolling
@@ -120,6 +133,7 @@ class Overlay {
         console.log('close');
         if (this._isMounted) {
             this._mountNode.classList.add(`${styles.closed}`);
+            this._mountNode.style.zIndex = '0';
             if (this._options.flag_lock_page_scroll) {
                 // unlock body scrolling
                 document.body.classList.remove(`${styles.noOverflow}`)

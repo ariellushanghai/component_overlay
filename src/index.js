@@ -1,9 +1,9 @@
 import 'babel-polyfill'
 import Overlay from './overlay';
 
-const init = _ => {
-    const confirmCallback = _ => alert(JSON.stringify(`confirmCallback() @ ${new Date()}`));
-    const cancelCallback = _ => alert(JSON.stringify(`cancelCallback() @ ${new Date()}`));
+const init = () => {
+    const confirmCallback = () => alert(JSON.stringify(`confirmCallback() @ ${(new Date()).toLocaleTimeString()}`));
+    const cancelCallback = () => alert(JSON.stringify(`cancelCallback() @ ${(new Date()).toLocaleTimeString()}`));
 
 
     const demo_callback = new Overlay({
