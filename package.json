@@ -1,0 +1,25 @@
+{
+  "name": "component_overlay",
+  "version": "1.0.0",
+  "description": "带覆盖层的Modal组件",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "parcel ./src/index.pug",
+    "build": "parcel build ./src/index.pug"
+  },
+  "keywords": [],
+  "author": "陆欢",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^9.6.1",
+    "parcel-bundler": "^1.12.3",
+    "postcss-modules": "^1.4.1",
+    "pug": "^2.0.4",
+    "stylus": "^0.54.5"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "normalize.css": "^8.0.1"
+  }
+}

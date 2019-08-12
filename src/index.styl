@@ -1,0 +1,30 @@
+PRIMARY_COLOR = #2f86f6
+:global {
+  .document {
+    padding 10px
+  }
+
+  .buttons {
+    display flex
+    justify-content space-between
+    align-items center
+  }
+
+  .btn {
+    width 100px
+    height 45px
+    font-size 15px
+    font-weight 500
+    color #606266
+    border 1px solid #dcdfe6
+    background-color #fff
+    padding 10px
+    border-radius 6px
+
+    &.primary {
+      color #fff
+      background-color PRIMARY_COLOR
+      border-color PRIMARY_COLOR
+    }
+  }
+}

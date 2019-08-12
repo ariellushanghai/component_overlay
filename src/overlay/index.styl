@@ -1,0 +1,106 @@
+MODAL_PADDING = 30px
+DEFAULT_TEXT_COLOR = #303133
+
+.coverViewport {
+  top 0
+  right 0
+  bottom 0
+  left 0
+  position fixed
+}
+
+.centerItsChild {
+  display flex
+  justify-content center
+  align-items center
+}
+
+.spaceBetweenItsChildren {
+  display flex
+  justify-content space-between
+  align-items center
+}
+
+.containedText {
+  overflow hidden
+  text-overflow ellipsis
+  word-wrap break-word
+  white-space nowrap
+}
+
+.noOverflow {
+  overflow hidden
+}
+
+.closed {
+  display none
+  animation slideInFromZ 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) reverse
+}
+
+.mask {
+  composes centerItsChild coverViewport
+  //pointer-events none
+  background-color rgba(0 0 0 .7)
+  padding 10px
+}
+
+.modal {
+  color DEFAULT_TEXT_COLOR
+  position relative
+  pointer-events auto
+  z-index 2
+  min-width 300px
+  max-width calc(100% - 20px)
+  max-height 100%
+  overflow-y auto
+  background-color #fff
+  user-select none
+  border-radius 4px
+}
+
+.title {
+  composes containedText
+  text-align center
+  line-height 50px
+  padding 0 MODAL_PADDING
+}
+
+.content {
+  line-height 1.2
+  padding MODAL_PADDING
+}
+
+.buttonContainer {
+  composes spaceBetweenItsChildren
+  position relative
+  padding (MODAL_PADDING / 2)  MODAL_PADDING
+
+  &:after {
+    content ""
+    position absolute
+    z-index 2
+    transform scaleY(.5) translateY(-100%)
+    top 0
+    left 0
+    right auto
+    bottom auto
+    width 100%
+    border-top 2px solid #e2e4ea
+    transform-origin 50% 0
+  }
+}
+
+.slideInFromZ {
+  animation slideInFromZ 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+}
+
+@keyframes slideInFromZ {
+  0% {
+    transform translateZ(600px)
+    opacity 0
+  }
+  100% {
+    transform translateZ(0)
+    opacity 1
+  }
+}
