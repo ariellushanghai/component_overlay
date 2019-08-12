@@ -18,7 +18,7 @@ const init = _ => {
         flag_html_as_content: true,
     });
 
-    const demo_ricktext = new Overlay({
+    const demo_rich_text = new Overlay({
         title: '标题文字',
         content: `<h2>富文本内容</h2>
                   <p style="color: red;">红字</p>
@@ -41,7 +41,7 @@ const init = _ => {
         demo_callback.open()
     });
     document.querySelector('#btn_1').addEventListener('click', () => {
-        demo_ricktext.open()
+        demo_rich_text.open()
     });
     document.querySelector('#btn_2').addEventListener('click', () => {
         demo_control.open();
